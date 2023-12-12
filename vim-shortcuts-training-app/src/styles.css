@@ -1,0 +1,17 @@
+body {
+    background: black;
+    color: white;
+}
+
+.active {
+    color: green;
+}
+
+ul li {
+    list-style: none;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
