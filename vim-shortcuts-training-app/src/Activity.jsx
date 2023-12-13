@@ -1,6 +1,6 @@
 import "./ActivityStyle.css"
 
-export default function Activity({ activity, startActivity }) {
+export default function Activity({ activity, startActivity, deleteActivity }) {
     console.log(activity.sessions);
 
     return (
@@ -16,6 +16,8 @@ export default function Activity({ activity, startActivity }) {
                 })}
             </div></h3>
             <button onClick={() => startActivity(activity.id)}>Start Activity</button>
+
+            <button onClick={() => deleteActivity(activity.id)}>Delete Activity</button>
         </div>
     )
 }

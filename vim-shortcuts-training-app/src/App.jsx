@@ -28,6 +28,10 @@ export default function App() {
     })
   }
 
+  function deleteActivity(id) {
+    setActivities(prevActivities => prevActivities.filter(activity => activity.id !== id))
+  }
+
   return (
     <>
       <h1>Daily Activities</h1>
@@ -36,7 +40,7 @@ export default function App() {
           <CreateActivity addActivity={addActivity}/>
           {activities.map((activity) => {
             return (
-              <Activity key={activity.id} activity={activity} startActivity={startActivity} />
+              <Activity key={activity.id} activity={activity} startActivity={startActivity} deleteActivity={deleteActivity} />
             )
           })}
         </>
