@@ -6,30 +6,22 @@ export default function CreateActivity({ addActivity }) {
     const [input_session, setInputSession] = useState("")
     const [sessions, setSessions] = useState([])
     const [input_time, setInputTime] = useState("")
-    const [added_time, setAddedTime] = useState("")
 
     function handleSubmit(e) {
         e.preventDefault()
         if (input_value) {
-            addActivity({ name: input_value, id: crypto.randomUUID(), sessions: sessions, total_time: added_time })
+            addActivity({ name: input_value, id: crypto.randomUUID(), sessions: sessions })
         }
         setInputValue("")
         setSessions([])
         setInputSession("")
         setInputTime("")
-        setAddedTime("")
     }
 
     function addToSessionList(e) {
         e.preventDefault()
-        setSessions(prevSessions => { return [...prevSessions, { name: input_session, id: crypto.randomUUID() }] })
+        setSessions(prevSessions => { return [...prevSessions, { name: input_session, id: crypto.randomUUID(), time: input_time }] })
     }
-
-    function setTotalAddedTime(e) {
-        e.preventDefault()
-        setAddedTime(input_time)
-    }
-
     return (
         <>
             <form className={"create-activity-form"} onSubmit={handleSubmit}>
@@ -38,20 +30,17 @@ export default function CreateActivity({ addActivity }) {
                 <div>
                     <label htmlFor='session-input'>Session: </label>
                     <input value={input_session} onChange={(e) => setInputSession(e.target.value)} id='session-input'></input>
-                    <button onClick={addToSessionList}>+</button>
-                </div>
-
-                <div>
                     <label htmlFor='time-input'>Time: </label>
                     <input value={input_time} onChange={(e) => setInputTime(e.target.value)} id='time-input'></input>
-                    <button onClick={setTotalAddedTime}>+</button>
+                    <button onClick={addToSessionList}>+</button>
                 </div>
 
                 <div>Sessions Added:</div>
                 {
-                    sessions.map((session) => <div key={session.id}>{session.name}</div>)
+                    sessions.map((session) => <div key={session.id}>
+                        Name: {session.name} Time: {session.time}
+                    </div>)
                 }
-                <div>Time: {added_time}</div>
                 <div><button>Create</button></div>
             </form>
         </>
