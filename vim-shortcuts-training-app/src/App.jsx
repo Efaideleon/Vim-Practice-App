@@ -3,11 +3,22 @@ import ActivityPage from "./ActivityPage";
 import "./styles.css"
 import { useState } from "react";
 import CreateActivity from "./CreateActivity";
+import { storage } from "./firebase"
+import { ref, uploadBytes } from 'firebase/storage'
 
 export default function App() {
   const [currentActivity, setCurrentActivity] = useState("")
   const [isActivityRunning, setIsActivityRunning] = useState(false)
   const [activities, setActivities] = useState([])
+
+  const [imageUpload, setImageUpload] = useState(null)
+  const uploadImage = () => {
+    if(imageUpload === null) return
+    const imageRef = ref(storage, `images/${imageUpload.name }`)
+    uploadBytes(imageRef, imageUpload).then(() => {
+      alert("image uploaded")
+    })
+  }
 
   function startActivity(id) {
     activities.map((activity) => {
@@ -43,6 +54,8 @@ export default function App() {
               <Activity key={activity.id} activity={activity} startActivity={startActivity} deleteActivity={deleteActivity} />
             )
           })}
+          <input type="file" onChange={(event)=> setImageUpload(event.target.files[0])}></input>
+          <button onClick={uploadImage}>Upload Image</button>
         </>
       }
 
